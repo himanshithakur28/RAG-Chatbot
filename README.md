@@ -28,18 +28,18 @@ The chatbot allows users to upload a PDF and ask questions based on its content.
 - PyPDF
 
 ---
+
 ## Screenshots
 
 ### Home Page
 
 ![Home Page](screenshots/Home.png)
 
-
 ---
 
 ### PDF Uploaded
 
-![Upload](screenshot/upload.png)
+![Upload](screenshots\upload.png)
 
 ---
 
@@ -49,10 +49,9 @@ The chatbot allows users to upload a PDF and ask questions based on its content.
 
 ---
 
+### Question
 
-### Question 
-
-![Question](screenshot/question.png)
+![Question](screenshots\question.png)
 
 ---
 
