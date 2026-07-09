@@ -39,7 +39,7 @@ The chatbot allows users to upload a PDF and ask questions based on its content.
 
 ### PDF Uploaded
 
-![Upload](screenshots\upload.png)
+![Upload](screenshots/upload.png)
 
 ---
 
@@ -51,7 +51,7 @@ The chatbot allows users to upload a PDF and ask questions based on its content.
 
 ### Question
 
-![Question](screenshots\question.png)
+![Question](screenshots/question.png)
 
 ---
 
