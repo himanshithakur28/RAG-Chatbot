@@ -1,39 +1,38 @@
-import nltk
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.corpus import stopwords
-import string
+import re
 
-stop_word = set(stopwords.words('english'))
+def split_paragraphs(text):
 
-def split_sentences(text):
-    return sent_tokenize(text)
+    text = text.replace("\r", "")
 
-def clean_text(text):
-    text = text.lower()
-    words = word_tokenize(text)    
-    expanded_words = []
+    pattern = r'(?=\n?[A-Z][A-Za-z\s()\-]{2,40}\n)'
 
-    for word in words:
-        if word == "ai":
-            expanded_words.extend(["artificial", "intelligence"])
-        elif word == "ml":
-            expanded_words.extend(["machine", "learning"])
-        else:
-            expanded_words.append(word)
+    chunks = re.split(pattern, text)
 
-    cleaned_words = []
-
-    for word in expanded_words:
-        if word not in string.punctuation and word not in stop_word:
-            cleaned_words.append(word)
-
-    return " ".join(cleaned_words)
-
-def create_chunks(sentences, chunk_size=3):
-    chunks = []
-
-    for i in range(0, len(sentences), chunk_size):
-        chunk = " ".join(sentences[i:i + chunk_size])
-        chunks.append(chunk)
+    chunks = [chunk.strip() for chunk in chunks if chunk.strip()]
 
     return chunks
+
+
+def expand_abbreviations(text):
+
+    abbreviations = {
+        "AI": "Artificial Intelligence",
+        "ML": "Machine Learning",
+        "NLP": "Natural Language Processing",
+        "DL": "Deep Learning",
+        "RAG": "Retrieval Augmented Generation",
+    }
+
+    words = text.split()
+
+    expanded = []
+
+    for word in words:
+        clean_word = word.upper().strip("?,.!")
+
+        if clean_word in abbreviations:
+            expanded.append(abbreviations[clean_word])
+        else:
+            expanded.append(word)
+
+    return " ".join(expanded)
