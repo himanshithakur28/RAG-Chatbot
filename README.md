@@ -1,31 +1,30 @@
-# 📚 Context-Aware Intelligent FAQ Chatbot (TF-IDF RAG)
+# Intelligent PDF Question Answering Chatbot (RAG)
 
-A simple Retrieval-Augmented Generation (RAG) chatbot built with Python and Streamlit.
-
-The chatbot allows users to upload a PDF and ask questions based on its content. It retrieves the most relevant information using TF-IDF Vectorization and Cosine Similarity.
+An AI-powered PDF Question Answering chatbot that allows users to upload any PDF and ask questions about its content. The application uses **Sentence Transformers** for semantic search and **Groq Llama 3.1** to generate context-aware responses using a **Retrieval-Augmented Generation (RAG)** pipeline.
 
 ---
 
 ## Features
 
-- Upload PDF documents
-- Extract text from PDF
-- Text preprocessing using NLTK
-- Sentence chunking
-- TF-IDF Vectorization
-- Cosine Similarity Search
-- Chat History
-- Simple Streamlit UI
+-  Upload any PDF document
+-  Ask questions based on the uploaded document
+-  Semantic search using Sentence Transformers
+-  Context-aware responses using Groq Llama 3.1
+-  Cosine Similarity for document retrieval
+-  Chat history
+-  Interactive Streamlit interface
 
 ---
-
 ## Technologies Used
 
 - Python
 - Streamlit
-- NLTK
+- Sentence Transformers (`all-MiniLM-L6-v2`)
+- Groq API (Llama 3.1)
 - Scikit-learn
 - PyPDF
+- NLTK
+- Git & GitHub
 
 ---
 
@@ -55,47 +54,125 @@ The chatbot allows users to upload a PDF and ask questions based on its content.
 
 ---
 
-## Project Structure
+##  Project Structure
 
 ```
 RAG-Chatbot/
 │
 ├── app.py
 ├── requirements.txt
-├── README.md
+├── .gitignore
+├── .env
 │
 ├── utils/
 │   ├── preprocess.py
-│   └── search.py
+│   ├── search.py
+│   └── llm.py
+│
+└── README.md
 ```
 
 ---
+##  How It Works
 
-## How to Run
+1. Upload a PDF document.
+2. Extract text from the PDF.
+3. Split the document into chunks.
+4. Generate embeddings using Sentence Transformers.
+5. Compare the user's question with document chunks using Cosine Similarity.
+6. Retrieve the most relevant chunk.
+7. Send the retrieved context and user question to the Groq LLM.
+8. Display a natural language answer.
 
-Install dependencies:
+---
+##  RAG Pipeline
+
+```
+User Question
+       │
+       ▼
+Upload PDF
+       │
+       ▼
+Extract Text
+       │
+       ▼
+Chunk Document
+       │
+       ▼
+Sentence Transformer Embeddings
+       │
+       ▼
+Cosine Similarity
+       │
+       ▼
+Retrieve Relevant Context
+       │
+       ▼
+Groq Llama 3.1
+       │
+       ▼
+Generated Answer
+```
+---
+##  Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/himanshithakur28/RAG-Chatbot.git
+```
+
+Move into the project folder
+
+```bash
+cd RAG-Chatbot
+```
+
+Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+Activate the virtual environment
+
+Windows
+
+```bash
+.venv\Scripts\activate
+```
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run:
+Create a `.env` file and add your Groq API key
+
+```text
+GROQ_API_KEY=your_api_key_here
+```
+
+Run the application
 
 ```bash
 streamlit run app.py
 ```
 
 ---
-
 ## Future Improvements
 
-- Replace TF-IDF with Sentence Embeddings
-- Use FAISS Vector Database
-- Support multiple PDFs
-- Add LLM-based answer generation
+- FAISS / ChromaDB vector database
+- Retrieve Top-K document chunks
+- Conversation memory
+- Support for multiple PDFs
+- Source citations
+- Hybrid search (Keyword + Semantic Search)
 
 ---
 
-## Author
+LinkedIn: *(linkedin.com/in/himanshithakur2811)*
+---
 
-Himanshi Thakur
+##  If you found this project useful, consider giving it a star!
