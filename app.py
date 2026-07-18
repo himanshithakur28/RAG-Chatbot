@@ -1,13 +1,13 @@
 import streamlit as st
 from pypdf import PdfReader
-
+from utils.llm import generate_answer
 from utils.preprocess import split_paragraphs, expand_abbreviations
 from utils.search import create_embeddings, find_best_answer
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-st.title("📄 PDF Question Answering Chatbot (Embedding-based RAG)")
+st.title("📄 AI-Powered PDF Question Answering Chatbot")
 st.write("Upload a PDF and ask questions based on its content.")
 
 st.header("Upload your PDF file")
@@ -55,20 +55,20 @@ if st.button("Ask"):
         st.warning("Please enter a question.")
 
     else:
-
         expanded_question = expand_abbreviations(question)
 
-        answer = find_best_answer(
+        context = find_best_answer(
             expanded_question,
             chunk_embeddings,
             chunks
         )
 
-        st.header("Answer")
-
-        if answer is None:
+        if context is None:
             answer = "Sorry, I couldn't find an answer in the uploaded PDF."
+        else:
+            answer = generate_answer(question, context)
 
+        st.header("Answer")
         st.success(answer)
 
         st.session_state.chat_history.append(
@@ -77,7 +77,6 @@ if st.button("Ask"):
                 "answer": answer
             }
         )
-
 if st.session_state.chat_history:
 
     st.header("Chat History")
