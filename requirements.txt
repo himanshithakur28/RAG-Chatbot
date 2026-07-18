@@ -1,4 +1,5 @@
 streamlit
 pypdf
-nltk
+sentence-transformers
+torch
 scikit-learn

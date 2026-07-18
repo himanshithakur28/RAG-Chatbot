@@ -1,16 +1,27 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
+# Load model once
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
-def find_best_answer(question, cleaned_chunks, original_chunks):
-    vectorizer = TfidfVectorizer()
-    chunk_vectors = vectorizer.fit_transform(cleaned_chunks)
-    question_vector = vectorizer.transform([question])
-    similarities = cosine_similarity(question_vector, chunk_vectors)
+
+def create_embeddings(chunks):
+    return model.encode(chunks)
+
+
+def find_best_answer(question, chunk_embeddings, chunks):
+
+    question_embedding = model.encode([question])
+
+    similarities = cosine_similarity(
+        question_embedding,
+        chunk_embeddings
+    )
+
     best_score = similarities.max()
     best_index = similarities.argmax()
 
     if best_score < 0.30:
-     return None
+        return None
 
-    return original_chunks[best_index]
+    return chunks[best_index]
